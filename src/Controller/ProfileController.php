@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Picture;
 use App\Entity\Profile;
-use App\Entity\User;
 use App\Form\PictureType;
 use App\Form\ProfileType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,32 +19,34 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/create", name="profile_create")
      */
-    public function create(User $user, Request $request, EntityManagerInterface $entityManager): Response
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $profile = new Profile();
+
         $form = $this->createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid()){
-            $user->setRoles(['ROLE_USER']) ;
+            $this->getUser()->setRoles(['ROLE_USER']);
             //todo Censurer les gros mots
             $entityManager->persist($profile);
             $entityManager->flush();
 
         $this->addFlash("success", "You have filled up your profile successfully!");
-        return $this->redirectToRoute("main_home");
+        return $this->redirectToRoute("profile_pic");
         }
     return $this->render('profile/create.html.twig', [
         "profileForm"=>$form->createView()
     ]);
     }
 
+
     /**
      * @Route ("/profile/create/pic", name="profile_pic")
      */
-    public function pic(){
+    public function pic(EntityManagerInterface $entityManager, Request $request){
         $picture = new Picture();
         $formPicture = $this->createForm(PictureType::class, $picture);
-        $formPicture->handleRequest($picture);
+        $formPicture->handleRequest($request);
 
         if ($formPicture->isSubmitted() && $formPicture->isValid()){
             /**@var UploadedFile $uploadedFile*/
@@ -53,15 +54,21 @@ class ProfileController extends AbstractController
 
             $newFileName = ByteString::fromRandom(30).".".$uploadedFile->guessExtension();
             try {
-                $uploadedFile->move($this->getParameter('upload_dir', $newFileName));
+                //upload_dir est configuré dans services.yaml
+                $uploadedFile->move($this->getParameter('upload_dir'), $newFileName);
             } catch (\Exception $e){
-                $e->getMessage();
+                dd($e->getMessage());
             }
 
+            $picture->setDateCreated(new \DateTime());
+            $picture->setFileName($newFileName);
+            $picture->setUser($this->getUser());
 
+            $entityManager->persist($picture);
+            $entityManager->flush();
 
-
-
+            $this->addFlash('success', 'Your beautifull !');
+            return $this->redirectToRoute("main_home");
         }
 
         return $this->render('profile/pic.html.twig', [

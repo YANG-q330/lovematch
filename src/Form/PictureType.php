@@ -19,7 +19,7 @@ class PictureType extends AbstractType
             ->add('pic', FileType::class, [
                 'label' => 'Choisissez un fichier',
                 'mapped' => false,
-                'constraint' => [
+                'constraints' => [
                     new Image([
                         'maxSize' => '8M'
                         ])

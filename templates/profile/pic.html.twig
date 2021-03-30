@@ -3,16 +3,12 @@
 {% block body %}
     <div class="container ">
         <h2>Add picture</h2>
-        {{form_start(picForm) }}
-            {{ form_widget(picForm) }}
-        <div class="field is-grouped">
-            <button class="mx-5 button btn-outline-success">Submit</button>
 
-        </div>
-        {{form_end(picForm) }}
+        {{ form(picForm) }}
+
     </div>
 {% endblock %}
 
 {% block title %}
-
+    Picture
 {% endblock %}

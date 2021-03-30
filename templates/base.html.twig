@@ -47,6 +47,7 @@
                         <div >
                             {% if(app.user) %}
                                 <a href="{{ path('app_logout') }}" class="btn btn-warning mx-3" type="button">Log out ({{ app.user.username }})</a>
+                                <a href="{{ path('profile_create') }}" class="btn btn-outline-primary border-primary">Profile</a>
                             {% else %}
                                 <a href="{{ path('app_register') }}" class="btn btn-warning mx-3" type="button">Register</a>
                                 <a href="{{ path('app_login') }}" class="btn btn-outline-primary border-primary" type="button">Log In</a>

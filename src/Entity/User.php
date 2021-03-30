@@ -196,7 +196,7 @@ class User implements UserInterface
     {
         if (!$this->pictures->contains($picture)) {
             $this->pictures[] = $picture;
-            $picture->setPicture($this);
+            $picture->setUser($this);
         }
 
         return $this;
@@ -206,8 +206,8 @@ class User implements UserInterface
     {
         if ($this->pictures->removeElement($picture)) {
             // set the owning side to null (unless already changed)
-            if ($picture->getPicture() === $this) {
-                $picture->setPicture(null);
+            if ($picture->getUser() === $this) {
+                $picture->setUser(null);
             }
         }
 

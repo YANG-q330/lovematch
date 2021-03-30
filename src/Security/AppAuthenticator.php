@@ -103,7 +103,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
             return new RedirectResponse($targetPath);
         }
 
-        $this->flashBag->add('success', "Welcome, you are registered");
+        $this->flashBag->add("success", "Welcome, you are registered");
         return new RedirectResponse($this->urlGenerator->generate('main_home'));
 
     }
