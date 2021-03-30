@@ -13,7 +13,7 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('birthday', DateType::HTML5_FORMAT)
+            ->add('birthday', DateType::class,['widget' => 'single_text'])
             ->add('sex')
             ->add('postal_code')
             ->add('city')
