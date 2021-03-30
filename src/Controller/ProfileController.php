@@ -16,15 +16,16 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/create", name="profile_create")
      */
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    public function create(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
         $profile = new Profile();
         $form = $this->createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid()){
-        //todo Censurer les gros mots
-        $entityManager->persist($profile);
-        $entityManager->flush();
+            $user->setRoles(['ROLE_USER']) ;
+            //todo Censurer les gros mots
+            $entityManager->persist($profile);
+            $entityManager->flush();
 
         $this->addFlash("success", "You have filled up your profile successfully!");
         return $this->redirectToRoute("main_home");

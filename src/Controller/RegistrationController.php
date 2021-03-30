@@ -32,6 +32,7 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setDateCreated(new \DateTime);
+            $user->setRoles(['ROLE_USER_NOT_PROFILED']);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

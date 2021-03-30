@@ -1,4 +1,6 @@
 security:
+    role_hierarchy:
+        ROLE_USER: ROLE_USER_NOT_PROFILED
     encoders:
         App\Entity\User:
             algorithm: auto
