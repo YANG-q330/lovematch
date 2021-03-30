@@ -15,7 +15,6 @@ class SearchType extends AbstractType
             ->add('sex')
             ->add('department')
             ->add('age')
-            ->add('user')
         ;
     }
 

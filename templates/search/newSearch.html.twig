@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container ">
+        <h2>Your search</h2>
+        {{form_start(searchForm) }}
+        {{form_row(searchForm.sex) }}
+        {{form_row(searchForm.department) }}
+        {{form_row(searchForm.age) }}
+        <div class="field is-grouped">
+            <button class="mx-5 button btn-outline-success">Submit</button>
+            <button class="button btn-outline-danger">Cancel</button>
+        </div>
+        {{form_end(searchForm) }}
+    </div>
+{% endblock %}
+
+{% block title %}
+Your search
+{% endblock %}
+
