@@ -30,7 +30,7 @@ class Picture
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="pictures")
      */
-    private $picture;
+    private $user;
 
     public function getId(): ?int
     {
@@ -61,14 +61,14 @@ class Picture
         return $this;
     }
 
-    public function getPicture(): ?User
+    public function getUser(): ?User
     {
-        return $this->picture;
+        return $this->user;
     }
 
-    public function setPicture(?User $picture): self
+    public function setUser(?User $user): self
     {
-        $this->picture = $picture;
+        $this->user = $user;
 
         return $this;
     }
