@@ -34,4 +34,13 @@ class ProfileController extends AbstractController
         "profileForm"=>$form->createView()
     ]);
     }
+
+    public  function search(Request $request, EntityManagerInterface $entityManager): Response{
+
+    }
+
+
+
+
+
 }
