@@ -62,6 +62,11 @@ class User implements UserInterface
      */
     private $pictures;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Search::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $search;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -205,6 +210,18 @@ class User implements UserInterface
                 $picture->setPicture(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSearch(): ?Search
+    {
+        return $this->search;
+    }
+
+    public function setSearch(?Search $search): self
+    {
+        $this->search = $search;
 
         return $this;
     }

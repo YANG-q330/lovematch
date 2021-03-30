@@ -32,6 +32,11 @@ class Search
      */
     private $age;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="search", cascade={"persist", "remove"})
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,28 @@ class Search
     public function setAge(int $age): self
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setSearch(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getSearch() !== $this) {
+            $user->setSearch($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }
