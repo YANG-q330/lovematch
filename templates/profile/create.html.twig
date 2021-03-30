@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block body %}
+    <div class="container ">
+        <h2>Add profile</h2>
+        {{form_start(profileForm) }}
+        {{form_row(profileForm.birthday) }}
+        {{form_row(profileForm.sex) }}
+        {{form_row(profileForm.postal_code) }}
+        {{form_row(profileForm.city) }}
+        {{form_row(profileForm.presentation) }}
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-success">Submit</button>
+            </div>
+            <div class="control">
+                <button class="button is-link is-light">Cancel</button>
+            </div>
+        </div>
+        {{form_end(profileForm) }}
+    </div>
+{% endblock %}
