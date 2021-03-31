@@ -10,6 +10,7 @@ use App\Form\ProfileType;
 use App\Repository\ProfileRepository;
 use claviska\SimpleImage;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,6 +73,7 @@ class ProfileController extends AbstractController
 
 
     /**
+     * @IsGranted ("ROLE_USER_NOT_PROFILED")
      * @Route("/profile/create", name="profile_create")
      */
     public function create(Request $request, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage): Response
@@ -105,6 +107,7 @@ class ProfileController extends AbstractController
 
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route ("/profile/{id}", name="profile_detail", requirements={"id": "\d+"})
      */
     public function detail(Request $request, ProfileRepository $profileRepository, EntityManagerInterface $entityManager): Response{

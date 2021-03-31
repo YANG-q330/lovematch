@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SearchController extends AbstractController
 {
     /**
-     *
+     * @IsGranted ("ROLE_USER")
      * @Route("/search/new", name="search_newSearch")
      */
     public function newSearch(Request $request, EntityManagerInterface $entityManager):Response{
@@ -47,6 +47,7 @@ class SearchController extends AbstractController
     }
 
     /**
+     * @IsGranted ("ROLE_USER")
      * @Route("/search", name="search_match")
      */
     public function match(UserRepository $repository):Response{
