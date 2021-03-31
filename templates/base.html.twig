@@ -49,8 +49,18 @@
                         </ul>
                         <div >
                             {% if(app.user) %}
-                                <a href="{{ path('app_logout') }}" class="btn btn-warning mx-3" type="button">Log out ({{ app.user.username }})</a>
-                                <a href="{{ path('profile_create') }}" class="btn btn-outline-primary border-primary">Profile</a>
+                                <div class="mx-5 px-3 dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ app.user.username }}
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a href="{{ path('profile_create') }}" class="dropdown-item">Profile</a></li>
+                                        <li><a class="dropdown-item" href="#">What I search</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a href="{{ path('app_logout') }}" class="dropdown-item" type="button">Log out ({{ app.user.username }})</a></li>
+                                    </ul>
+                                </div>
+
                             {% else %}
                                 <a href="{{ path('app_register') }}" class="btn btn-warning mx-3" type="button">Register</a>
                                 <a href="{{ path('app_login') }}" class="btn btn-outline-primary border-primary" type="button">Log In</a>

@@ -7,6 +7,7 @@ use App\Entity\Profile;
 use App\Entity\User;
 use App\Form\PictureType;
 use App\Form\ProfileType;
+use claviska\SimpleImage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -60,6 +61,11 @@ class ProfileController extends AbstractController
             } catch (\Exception $e){
                 dd($e->getMessage());
             }
+
+            $simpleImage = new SimpleImage();
+            $simpleImage->fromFile($this->getParameter('upload_dir')."/$newFileName")
+                        ->bestFit(300, 300)
+                        ->toFile($this->getParameter('upload_dir')."/small/$newFileName");
 
             $picture->setDateCreated(new \DateTime());
             $picture->setFileName($newFileName);
