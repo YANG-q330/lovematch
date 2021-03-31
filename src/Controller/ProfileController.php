@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Picture;
 use App\Entity\Profile;
+use App\Entity\User;
 use App\Form\PictureType;
 use App\Form\ProfileType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -62,7 +63,10 @@ class ProfileController extends AbstractController
 
             $picture->setDateCreated(new \DateTime());
             $picture->setFileName($newFileName);
-            $picture->setUser($this->getUser());
+
+            /** @var User $user */
+            $user = $this->getUser();
+            $picture->setUser($user);
 
             $entityManager->persist($picture);
             $entityManager->flush();
