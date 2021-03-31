@@ -67,6 +67,11 @@ class User implements UserInterface
      */
     private $search;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $firstPicture;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -222,6 +227,18 @@ class User implements UserInterface
     public function setSearch(?Search $search): self
     {
         $this->search = $search;
+
+        return $this;
+    }
+
+    public function getFirstPicture(): ?string
+    {
+        return $this->firstPicture;
+    }
+
+    public function setFirstPicture(?string $firstPicture): self
+    {
+        $this->firstPicture = $firstPicture;
 
         return $this;
     }
