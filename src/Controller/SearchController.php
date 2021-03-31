@@ -25,7 +25,6 @@ class SearchController extends AbstractController
         /**@var User $user */
         $user = $this->getUser();
 
-        dump($user->getSearch());
         if ($user->getSearch()){
             $search = $user->getSearch();
         }
@@ -53,8 +52,8 @@ class SearchController extends AbstractController
     public function match(UserRepository $repository):Response{
         /**@var User $user */
         $user = $this->getUser();
-        $results = $repository->findAllMatches($user->getSearch());
 
+        $results = $repository->findAllMatches($user->getSearch());
         return $this->render('search/match.html.twig', ['matchesUser' => $results]);
     }
 

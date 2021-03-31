@@ -40,13 +40,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findAllMatches(Search $search){
         $ageMin = $search->getAgeMin();
         $date = new \DateTime('Y');
-        $yearMin = ($date->format('Y')) - $ageMin;
-        $yearMinDateT = new \DateTime($yearMin."-01-01");
+        $yearMaxBirth = ($date->format('Y')) - $ageMin;
+        $yearMaxDateT = new \DateTime($yearMaxBirth."-12-31");
 
         $ageMax = $search->getAgeMax();
-        $yearMax = $date->format('Y') - $ageMax;
-        $yearMaxDateT = new \DateTime($yearMax."-12-31");
-
+        $yearMinBirth = $date->format('Y') - $ageMax;
+        $yearMinDateT = new \DateTime($yearMinBirth."-01-01");
 
         $queryBuilder = $this->createQueryBuilder('U');
         //SELECT * FROM user u LEFT JOIN profile p ON u.profile_id=p.id WHERE p.sex='f'
@@ -56,8 +55,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $queryBuilder
             ->andWhere('p.sex = :sex')
             ->andWhere('p.postal_code LIKE :dep')
-            ->andWhere('p.birthday <= :yearMin')
-            ->andWhere('p.birthday >= :yearMax');
+            ->andWhere('p.birthday <= :yearMax')
+            ->andWhere('p.birthday >= :yearMin');
         $queryBuilder->setParameter(':sex', $search->getSex());
         $queryBuilder->setParameter(':dep',$search->getDepartment().'%');
         $queryBuilder->setParameter(':yearMin', $yearMinDateT);

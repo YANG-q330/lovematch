@@ -68,7 +68,7 @@ class User implements UserInterface
     private $search;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\OneToOne(targetEntity=Picture::class, cascade={"persist", "remove"})
      */
     private $firstPicture;
 
@@ -231,15 +231,16 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getFirstPicture(): ?string
+    public function getFirstPicture(): ?Picture
     {
         return $this->firstPicture;
     }
 
-    public function setFirstPicture(?string $firstPicture): self
+    public function setFirstPicture(?Picture $firstPicture): self
     {
         $this->firstPicture = $firstPicture;
 
         return $this;
     }
+    
 }

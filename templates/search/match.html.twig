@@ -2,13 +2,29 @@
 
 {% block body %}
 
-    <ul>
+    <div>
+        <h1>You search :</h1>
+        <p>a {{ app.user.search.sex }}, from dep. {{ app.user.search.department }}, from {{ app.user.search.ageMin }} to {{ app.user.search.ageMax }} years old</p>
+        <p>Look at the ones we found :</p>
+    </div>
+
+    <div class="row justify-content-center">
         {% for user in matchesUser %}
 
-            <li>{{ user.username }}</li>
+                <div class="card m-3" style="width: 18rem;">
+                    {% if(user.firstPicture) %}
+                    <img src="{{ asset('img/profile/small/'~user.firstPicture.fileName) }}" class="card-img-top" alt="...">
+                    {% else %}<img src=" " class="card-img-top" alt="...">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user.username }}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="{{path('profile_detail',{'id':user.id}) }}" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
 
         {% endfor %}
-    </ul>
+    </div>
 
 {% endblock %}
 
