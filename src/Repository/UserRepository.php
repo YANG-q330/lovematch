@@ -51,14 +51,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $queryBuilder->join('U.profile', 'p')
             ->addSelect('p');
         $queryBuilder
-            ->andWhere('p.sex = :sex')
-            ->andWhere('substr(p.postal_code,1,2) = :dep')
-            ->andWhere('YEAR(p.birthday) >= :yearMin')
-            ->andWhere('YEAR(p.birthday) <= :yearMax');
-        $queryBuilder->setParameter(':sex', $search->getSex());
-        $queryBuilder->setParameter(':dep',substr($search->getDepartment(),0,2));
-        $queryBuilder->setParameter(':yearMin', $yearMin);
-        $queryBuilder->setParameter(':yearMax', $yearMax);
+           // ->andWhere('p.sex = :sex')
+            ->andWhere('p.postal_code LIKE :dep');            //->andWhere('YEAR(p.birthday) >= :yearMin')
+            //->andWhere('YEAR(p.birthday) <= :yearMax');
+        //$queryBuilder->setParameter(':sex', $search->getSex());
+        $queryBuilder->setParameter(':dep',$search->getDepartment());
+        //$queryBuilder->setParameter(':yearMin', $yearMin);
+        //$queryBuilder->setParameter(':yearMax', $yearMax);
 
         $query = $queryBuilder->getQuery();
 

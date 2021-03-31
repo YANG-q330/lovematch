@@ -30,7 +30,7 @@ class SearchController extends AbstractController
         if($form->isSubmitted()&&$form->isValid()){
             $entityManager->persist($search);
             $entityManager->flush();
-            return $this->redirectToRoute("main_home");
+            return $this->redirectToRoute("search_match");
         }
         return $this->render('search/newSearch.html.twig', ["searchForm"=>$form->createView()]
         );
