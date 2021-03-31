@@ -5,7 +5,8 @@
     <div>
         <h2>You search :</h2>
         <p>a <strong>{{ app.user.search.sex }}</strong>, from dep. <strong>{{ app.user.search.department }}</strong>, from <strong>{{ app.user.search.ageMin }} to {{ app.user.search.ageMax }}</strong> years old</p>
-        <p>Look at the ones we found :</p>
+        <a href="{{ path('search_newSearch') }}" class="btn btn-outline-primary border-primary" type="button">Modify here</a>
+        <h1 class="text-center">Look at the ones we found :</h1>
     </div>
 
     <div class="row justify-content-center">
