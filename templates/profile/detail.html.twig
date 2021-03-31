@@ -12,7 +12,8 @@ Profile of {{ app.user.username }}
         <tbody>
         <tr>
             <th scope="row">Photo</th>
-            <td>{{app.user.firstPicture}} </td>
+            <td><img src="{{ asset('img/profile/small/'~app.user.firstPicture.fileName) }}" class="img-thumbnail w-25" alt="Photo de profil"></td>
+            <!--  <td>{{app.user.firstPicture.fileName}}</td>  -->
         </tr>
         <button class="button btn-outline-warning">Modify your photo</button> >
 

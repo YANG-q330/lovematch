@@ -3,8 +3,8 @@
 {% block body %}
 
     <div>
-        <h1>You search :</h1>
-        <p>a {{ app.user.search.sex }}, from dep. {{ app.user.search.department }}, from {{ app.user.search.ageMin }} to {{ app.user.search.ageMax }} years old</p>
+        <h2>You search :</h2>
+        <p>a <strong>{{ app.user.search.sex }}</strong>, from dep. <strong>{{ app.user.search.department }}</strong>, from <strong>{{ app.user.search.ageMin }} to {{ app.user.search.ageMax }}</strong> years old</p>
         <p>Look at the ones we found :</p>
     </div>
 
@@ -13,7 +13,7 @@
 
                 <div class="card m-3" style="width: 18rem;">
                     {% if(user.firstPicture) %}
-                    <img src="{{ asset('img/profile/small/'~user.firstPicture.fileName) }}" class="card-img-top" alt="...">
+                    <img src="{{ asset('img/profile/small/'~user.firstPicture.fileName) }}" class="card-img-top" alt="Photo de profil">
                     {% else %}<img src=" " class="card-img-top" alt="...">
                     {% endif %}
                     <div class="card-body">
