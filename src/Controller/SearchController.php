@@ -18,8 +18,9 @@ class SearchController extends AbstractController
      */
     public function newSearch(Request $request, EntityManagerInterface $entityManager):Response{
         $search = new Search();
-        //$user = new User();
-        //$search->setUser($user);
+        /**@var User $user */
+        $user=$this->getUser();
+        $search->setUser($user);
         $form = $this->createForm(SearchType::class, $search);
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid()){
