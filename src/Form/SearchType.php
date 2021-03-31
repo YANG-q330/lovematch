@@ -14,7 +14,8 @@ class SearchType extends AbstractType
         $builder
             ->add('sex')
             ->add('department')
-            ->add('age')
+            ->add('ageMin')
+            ->add('ageMax')
         ;
     }
 

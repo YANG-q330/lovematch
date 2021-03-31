@@ -30,12 +30,17 @@ class Search
     /**
      * @ORM\Column(type="integer")
      */
-    private $age;
+    private $ageMin;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, mappedBy="search", cascade={"persist", "remove"})
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ageMax;
 
     public function getId(): ?int
     {
@@ -66,14 +71,14 @@ class Search
         return $this;
     }
 
-    public function getAge(): ?int
+    public function getAgeMin(): ?int
     {
-        return $this->age;
+        return $this->ageMin;
     }
 
-    public function setAge(int $age): self
+    public function setAgeMin(int $ageMin): self
     {
-        $this->age = $age;
+        $this->ageMin = $ageMin;
 
         return $this;
     }
@@ -96,6 +101,18 @@ class Search
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getAgeMax(): ?int
+    {
+        return $this->ageMax;
+    }
+
+    public function setAgeMax(int $ageMax): self
+    {
+        $this->ageMax = $ageMax;
 
         return $this;
     }

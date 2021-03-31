@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <ul>
+        {% for (user in matchesUser) %}
+
+            <li>{{ user.username }}</li>
+
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+{% block title %}
+    Your matches
+{% endblock %}

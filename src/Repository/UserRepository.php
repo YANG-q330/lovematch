@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Search;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,6 +35,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+
+    public function findAllMatches(Search $search){
+        $queryBuilder = $this->createQueryBuilder('U');
+        $queryBuilder
+            ->andWhere('U.sex = :sex')
+            ->andWhere('U.departement = :dep')
+            ->andWhere('U.age >= :ageMin')
+            ->andWhere('U.age <= :ageMax');
+        $queryBuilder->setParameter(':sex', $search->getSex());
+        $queryBuilder->setParameter(':dep',$search->getDepartment());
+        $queryBuilder->setParameter(':ageMin', $search->getAgeMin());
+        $queryBuilder->setParameter(':ageMax', $search->getAgeMax());
+
+        $query = $queryBuilder->getQuery();
+
+        return $query->getResult();
     }
 
     // /**

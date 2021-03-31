@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\Search;
 use App\Entity\User;
 use App\Form\SearchType;
+use App\Repository\SearchRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class SearchController extends AbstractController
 {
     /**
-     * @Route("/search", name="search_newSearch")
+     *
+     * @Route("/search/new", name="search_newSearch")
      */
     public function newSearch(Request $request, EntityManagerInterface $entityManager):Response{
         $search = new Search();
@@ -32,4 +36,17 @@ class SearchController extends AbstractController
         );
 
     }
+
+    /**
+     * @Route("/search", name="search_match")
+     */
+    public function match(UserRepository $repository):Response{
+        /**@var User $user */
+        $user = $this->getUser();
+        $results = $repository->findAllMatches($user->getSearch());
+
+        return $this->render('search/match.html.twig', ['matchesUser' => $results]);
+    }
+
+
 }
