@@ -7,6 +7,7 @@ use App\Entity\Profile;
 use App\Entity\User;
 use App\Form\PictureType;
 use App\Form\ProfileType;
+use App\Repository\ProfileRepository;
 use claviska\SimpleImage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -85,4 +86,17 @@ class ProfileController extends AbstractController
             "picForm"=>$formPicture->createView()
         ]);
     }
+
+    /**
+     * @Route ("/profile/{id}", name="profile_detail", requirements={"id": "\d+"})
+     */
+    public function detail($id, Request $request, ProfileRepository $profileRepository, EntityManagerInterface $entityManager): Response{
+        $profile = $profileRepository->find($id);
+        if (!$profile){
+            throw $this->createNotFoundException('This profile don\'t exist! ');
+        }
+        return $this->render('profile/detail.html.twig', ["profile"=>$profile]);
+    }
+
+
 }

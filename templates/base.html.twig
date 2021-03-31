@@ -35,7 +35,7 @@
                                         {{ app.user.username }}
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a href="{{ path('profile_create') }}" class="dropdown-item">Profile</a></li>
+                                        <li><a href="{{ path('profile_detail',{'id':app.user.id}) }}" class="dropdown-item">Profile</a></li>
                                         <li><a class="dropdown-item" href="#">What I search</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a href="{{ path('app_logout') }}" class="dropdown-item" type="button">Log out ({{ app.user.username }})</a></li>

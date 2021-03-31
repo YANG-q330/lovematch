@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Profile of {{ app.user.username }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>{{ app.user.username }}</h2>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th scope="row">Photo</th>
+        </tr>
+        <tr><button class="button btn-outline-warning">Modify your photo</button> ></tr>
+
+        <tr>
+            <th scope="row">Birthday</th>
+            <td>{{ profile.birthday|date("d-m-Y") }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Sex</th>
+            <td>{{ profile.sex }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Postal_code</th>
+            <td>{{ profile.postalCode }}</td>
+        </tr>
+        <tr>
+            <th scope="row">City</th>
+            <td>{{ profile.city }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Presentation</th>
+            <td>{{ profile.presentation }}</td>
+        </tr>
+        <tr><button class="button btn-outline-warning">Modify your information</button> ></tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
