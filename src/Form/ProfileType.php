@@ -17,8 +17,8 @@ class ProfileType extends AbstractType
             ->add('birthday', DateType::class,['widget' => 'single_text'])
             ->add('sex' , ChoiceType::class,[
                 'choices'=>[
-                    'Man'=>1,
-                    'Woman'=>2,
+                    'Man'=>"Man",
+                    'Woman'=>"Woman",
                 ],
             ])
             ->add('postal_code')

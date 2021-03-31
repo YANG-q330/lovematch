@@ -104,8 +104,15 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
         }
 
         $this->flashBag->add("success", "Welcome, you are registered");
-        return new RedirectResponse($this->urlGenerator->generate('main_home'));
-
+        /**
+         * @var User $user
+         */
+        $user=$token->getUser();
+        if ($user->getProfile()){
+            return new RedirectResponse($this->urlGenerator->generate('main_home'));
+        }else{
+            return new RedirectResponse($this->urlGenerator->generate('profile_create'));
+        }
     }
 
     protected function getLoginUrl()

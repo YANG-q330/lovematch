@@ -12,8 +12,9 @@ Profile of {{ app.user.username }}
         <tbody>
         <tr>
             <th scope="row">Photo</th>
+            <td>{{app.user.firstPicture}} </td>
         </tr>
-        <tr><button class="button btn-outline-warning">Modify your photo</button> ></tr>
+        <button class="button btn-outline-warning">Modify your photo</button> >
 
         <tr>
             <th scope="row">Birthday</th>
@@ -35,7 +36,7 @@ Profile of {{ app.user.username }}
             <th scope="row">Presentation</th>
             <td>{{ profile.presentation }}</td>
         </tr>
-        <tr><button class="button btn-outline-warning">Modify your information</button> ></tr>
+        <button class="button btn-outline-warning">Modify your information</button> >
         </tbody>
     </table>
 </div>

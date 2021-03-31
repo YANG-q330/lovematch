@@ -15,32 +15,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 use Symfony\Component\String\ByteString;
 
 class ProfileController extends AbstractController
 {
-    /**
-     * @Route("/profile/create", name="profile_create")
-     */
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $profile = new Profile();
 
-        $form = $this->createForm(ProfileType::class, $profile);
-        $form->handleRequest($request);
-        if($form->isSubmitted()&&$form->isValid()){
-            $this->getUser()->setRoles(['ROLE_USER']);
-            //todo Censurer les gros mots
-            $entityManager->persist($profile);
-            $entityManager->flush();
-
-        $this->addFlash("success", "You have filled up your profile successfully!");
-        return $this->redirectToRoute("profile_pic");
-        }
-    return $this->render('profile/create.html.twig', [
-        "profileForm"=>$form->createView()
-    ]);
-    }
 
 
     /**
@@ -75,10 +56,11 @@ class ProfileController extends AbstractController
             $user = $this->getUser();
             $picture->setUser($user);
 
+
             $entityManager->persist($picture);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Your beautifull !');
+            $this->addFlash('success', 'You are beautiful !');
             return $this->redirectToRoute("main_home");
         }
 
@@ -87,11 +69,48 @@ class ProfileController extends AbstractController
         ]);
     }
 
+
+
+    /**
+     * @Route("/profile/create", name="profile_create")
+     */
+    public function create(Request $request, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage): Response
+    {
+        $profile = new Profile();
+
+        $form = $this->createForm(ProfileType::class, $profile);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&&$form->isValid()){
+            /**
+             * @var User $user
+             */
+            $user=$this->getUser();
+            $profile->setUser($user);
+            $user->setRoles(['ROLE_USER']);
+            //todo Censurer les gros mots
+            $entityManager->persist($profile);
+            $entityManager->flush();
+            //reconnecter l'utilisateur
+            //on recrée une token pour l'utilisateur, sinon il est déconnecté !
+            $token = new PostAuthenticationGuardToken($user, 'main', $user->getRoles());
+            $tokenStorage->setToken($token);
+            $this->addFlash("success", "You have filled up your profile successfully!");
+            return $this->redirectToRoute("profile_pic");
+        }
+        return $this->render('profile/create.html.twig', [
+            "profileForm"=>$form->createView()
+        ]);
+    }
+
+
+
     /**
      * @Route ("/profile/{id}", name="profile_detail", requirements={"id": "\d+"})
      */
-    public function detail($id, Request $request, ProfileRepository $profileRepository, EntityManagerInterface $entityManager): Response{
-        $profile = $profileRepository->find($id);
+    public function detail(Request $request, ProfileRepository $profileRepository, EntityManagerInterface $entityManager): Response{
+        /** @var User $user */
+        $user = $this->getUser();
+        $profile = $profileRepository->find($user->getProfile()->getId());
         if (!$profile){
             throw $this->createNotFoundException('This profile don\'t exist! ');
         }
