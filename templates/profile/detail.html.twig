@@ -7,16 +7,10 @@ Profile of {{ app.user.username }}
 {% block body %}
 <div class="container">
     <h2>{{ app.user.username }}</h2>
-
-    <table class="table">
-        <tbody>
-        <tr>
-            <th scope="row">Photo</th>
-            <td><img src="{{ asset('img/profile/small/'~app.user.firstPicture.fileName) }}" class="img-thumbnail w-25" alt="Photo de profil"></td>
-            <!--  <td>{{app.user.firstPicture.fileName}}</td>  -->
-        </tr>
-        <button class="button btn-outline-warning">Modify your photo</button> >
-
+            <p><img src="{{ asset('img/profile/small/'~app.user.firstPicture.fileName) }}" class="img-thumbnail w-25" alt="Photo de profil"></p>
+            <p><a href="{{ path('profile_pic') }}" class="btn btn-outline-warning">Modify your photo</a> </p>
+        <table class="table">
+            <tbody>
         <tr>
             <th scope="row">Birthday</th>
             <td>{{ profile.birthday|date("d-m-Y") }}</td>
@@ -37,10 +31,9 @@ Profile of {{ app.user.username }}
             <th scope="row">Presentation</th>
             <td>{{ profile.presentation }}</td>
         </tr>
-        <button class="button btn-outline-warning">Modify your information</button> >
         </tbody>
     </table>
+    <a href="{{ path('profile_create') }}" class="btn btn-outline-warning">Modify your information</a>
 </div>
-
 {% endblock %}
 

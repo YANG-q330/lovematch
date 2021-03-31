@@ -55,7 +55,7 @@ class ProfileController extends AbstractController
 
             /** @var User $user */
             $user = $this->getUser();
-            $picture->setUser($user);
+            $user->setFirstPicture($picture);
 
 
             $entityManager->persist($picture);
@@ -78,15 +78,16 @@ class ProfileController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage): Response
     {
-        $profile = new Profile();
-
+        /** @var User $user*/
+        $user=$this->getUser();
+        if($user->getProfile()){
+            $profile=$user->getProfile();
+        }else{
+            $profile = new Profile();
+        }
         $form = $this->createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid()){
-            /**
-             * @var User $user
-             */
-            $user=$this->getUser();
             $profile->setUser($user);
             $user->setRoles(['ROLE_USER']);
             //todo Censurer les gros mots
