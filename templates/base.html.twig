@@ -37,7 +37,11 @@
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         {% if (is_granted("ROLE_USER")) %}
                                             <li><a href="{{ path('profile_detail',{'id':app.user.id}) }}" class="dropdown-item">Profile</a></li>
+                                            {% if app.user.search %}
                                             <li><a class="dropdown-item" href="{{ path('search_match')}}">What I search</a></li>
+                                                {% else %}
+                                                    <li><a class="dropdown-item" href="{{ path('search_newSearch')}}">What I search</a></li>
+                                                {% endif %}
                                         {% else %}
                                             <li><a href="{{ path('profile_create')}}" class="dropdown-item">Create profile</a></li>
                                         {% endif %}

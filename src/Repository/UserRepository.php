@@ -41,11 +41,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $ageMin = $search->getAgeMin();
         $date = new \DateTime('Y');
         $yearMaxBirth = ($date->format('Y')) - $ageMin;
-        $yearMaxDateT = new \DateTime($yearMaxBirth."-12-31");
+        $yearMaxDateTime = new \DateTime($yearMaxBirth."-12-31");
 
         $ageMax = $search->getAgeMax();
         $yearMinBirth = $date->format('Y') - $ageMax;
-        $yearMinDateT = new \DateTime($yearMinBirth."-01-01");
+        $yearMinDateTime = new \DateTime($yearMinBirth."-01-01");
 
         $queryBuilder = $this->createQueryBuilder('U');
         //SELECT * FROM user u LEFT JOIN profile p ON u.profile_id=p.id WHERE p.sex='f'
@@ -59,8 +59,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->andWhere('p.birthday >= :yearMin');
         $queryBuilder->setParameter(':sex', $search->getSex());
         $queryBuilder->setParameter(':dep',$search->getDepartment().'%');
-        $queryBuilder->setParameter(':yearMin', $yearMinDateT);
-        $queryBuilder->setParameter(':yearMax', $yearMaxDateT);
+        $queryBuilder->setParameter(':yearMin', $yearMinDateTime);
+        $queryBuilder->setParameter(':yearMax', $yearMaxDateTime);
 
         $query = $queryBuilder->getQuery();
 
