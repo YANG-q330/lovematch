@@ -21,10 +21,19 @@ class SearchController extends AbstractController
      * @Route("/search/new", name="search_newSearch")
      */
     public function newSearch(Request $request, EntityManagerInterface $entityManager):Response{
-        $search = new Search();
+
         /**@var User $user */
-        $user=$this->getUser();
-        $search->setUser($user);
+        $user = $this->getUser();
+
+        dump($user->getSearch());
+        if ($user->getSearch()){
+            $search = $user->getSearch();
+        }
+        else{
+            $search = new Search();
+            $search->setUser($user);
+        }
+
         $form = $this->createForm(SearchType::class, $search);
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid()){
@@ -32,6 +41,7 @@ class SearchController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute("search_match");
         }
+
         return $this->render('search/newSearch.html.twig', ["searchForm"=>$form->createView()]
         );
 

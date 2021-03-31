@@ -41,9 +41,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $ageMin = $search->getAgeMin();
         $date = new \DateTime('Y');
         $yearMin = ($date->format('Y')) - $ageMin;
+        $yearMinDateT = new \DateTime($yearMin."-01-01");
 
         $ageMax = $search->getAgeMax();
         $yearMax = $date->format('Y') - $ageMax;
+        $yearMaxDateT = new \DateTime($yearMax."-12-31");
+
 
         $queryBuilder = $this->createQueryBuilder('U');
         //SELECT * FROM user u LEFT JOIN profile p ON u.profile_id=p.id WHERE p.sex='f'
@@ -51,13 +54,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $queryBuilder->join('U.profile', 'p')
             ->addSelect('p');
         $queryBuilder
-           // ->andWhere('p.sex = :sex')
-            ->andWhere('p.postal_code LIKE :dep');            //->andWhere('YEAR(p.birthday) >= :yearMin')
-            //->andWhere('YEAR(p.birthday) <= :yearMax');
-        //$queryBuilder->setParameter(':sex', $search->getSex());
-        $queryBuilder->setParameter(':dep',$search->getDepartment());
-        //$queryBuilder->setParameter(':yearMin', $yearMin);
-        //$queryBuilder->setParameter(':yearMax', $yearMax);
+            ->andWhere('p.sex = :sex')
+            ->andWhere('p.postal_code LIKE :dep')
+            ->andWhere('p.birthday <= :yearMin')
+            ->andWhere('p.birthday >= :yearMax');
+        $queryBuilder->setParameter(':sex', $search->getSex());
+        $queryBuilder->setParameter(':dep',$search->getDepartment().'%');
+        $queryBuilder->setParameter(':yearMin', $yearMinDateT);
+        $queryBuilder->setParameter(':yearMax', $yearMaxDateT);
 
         $query = $queryBuilder->getQuery();
 
