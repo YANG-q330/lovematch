@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Profile;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +15,12 @@ class ProfileType extends AbstractType
     {
         $builder
             ->add('birthday', DateType::class,['widget' => 'single_text'])
-            ->add('sex')
+            ->add('sex' , ChoiceType::class,[
+                'choices'=>[
+                    'Man'=>1,
+                    'Woman'=>2,
+                ],
+            ])
             ->add('postal_code')
             ->add('city')
             ->add('presentation')
