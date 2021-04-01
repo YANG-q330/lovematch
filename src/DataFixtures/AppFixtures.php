@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $searchList =[];
-        for ($i=0;$i<50;$i++){
+        for ($i=0;$i<200;$i++){
             $search = new Search();
             $search->setSex($faker->randomElement(["Man","Woman"]));
             $search->setDepartment($faker->randomElement(["44000","35000","29000","98000","11000"]));
@@ -57,9 +57,12 @@ class AppFixtures extends Fixture
             $user->setDateCreated($faker->dateTimeBetween('-2 years'));
             $user->setPassword($faker->password(6, 20));
             $user->setProfile($faker->randomElement($profileList));
+            unset($profileList[array_search($user->getProfile(),$profileList)]);
             $user->setFirstPicture($faker->randomElement($photosList));
+            unset($photosList[array_search($user->getFirstPicture(),$photosList)]);
             $user->setRoles($faker->randomElements(["ROLE_USER", "ROLE_USER_NON_PROFILED"]));
             $user->setSearch($faker->randomElement($searchList));
+            unset($searchList[array_search($user->getSearch(),$searchList)]);
             $manager->persist($user);
         }
         $manager->flush();
