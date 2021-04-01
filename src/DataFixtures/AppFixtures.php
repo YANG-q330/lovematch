@@ -34,7 +34,7 @@ class AppFixtures extends Fixture
                 "Joh5Z86LUBtn7uwm8TLgQ5d7iMJBeM.jpg","LHHToss2auRunCCj4JvPqhNPMh5cko.jpg","MZkDrnzAEgtsgNuFeBRyRy93Gfdeg2.jpg","qHiAFf6jveLz4szoN2srLTbHbu3ssQ.jpg",
                 "T4moG5ybB1jGH2vw6Kc2fDzaRUQARj.jpg","VeYfBqj8LWLfPhRCRvv36aegPWQFZf.jpg","vhoyrmMgWkVaAwmRaw6psGa8VitsMx.jpg"]));
             $manager->persist($photo);
-            $profileList [] = $photo;
+            $photosList [] = $photo;
         }
         $manager->flush();
 
