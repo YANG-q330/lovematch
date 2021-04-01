@@ -7,8 +7,13 @@ Profile of {{ app.user.username }}
 {% block body %}
 <div class="container">
     <h2>{{ app.user.username }}</h2>
+        {% if app.user.firstPicture %}
             <p><img src="{{ asset('img/profile/small/'~app.user.firstPicture.fileName) }}" class="img-thumbnail w-25" alt="Photo de profil"></p>
             <p><a href="{{ path('profile_pic') }}" class="btn btn-outline-warning">Modify your photo</a> </p>
+        {% else %}
+            <p><a href="{{ path('profile_pic') }}" class="btn btn-outline-warning">Share your photo</a> </p>
+        {% endif %}
+
         <table class="table">
             <tbody>
         <tr>
